@@ -5,7 +5,7 @@ from pathlib import Path
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtQml import QQmlApplicationEngine
 
-from models.event_model import EventModel
+from models.repository import EventModel
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)

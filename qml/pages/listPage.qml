@@ -20,8 +20,10 @@ Item {
             anchors.leftMargin: 10
             anchors.bottomMargin: 10
             anchors.topMargin: 10
+            spacing: 10
+
             delegate: Pane {
-                width: view.width
+                width: listView.width
                 height: 100
                 Material.elevation: 3
 
@@ -35,91 +37,10 @@ Item {
 
 
             }
-            model: ListModel {
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-                ListElement {
-                    title: "test"
-                    description: "description here..."
-                }
-            }
-
-//            delegate: Item {
-//                x: 5
-//                width: 80
-//                height: 40
-//                Row {
-//                    id: row1
-//                    Rectangle {
-//                        width: 40
-//                        height: 40
-//                        color: colorCode
-//                    }
-
-//                    Text {
-//                        text: name
-//                        anchors.verticalCenter: parent.verticalCenter
-//                        font.bold: true
-//                    }
-//                    spacing: 10
-//                }
-//            }
-//            model: ListModel {
-//                ListElement {
-//                    name: "Grey"
-//                    colorCode: "grey"
-//                }
-
-//                ListElement {
-//                    name: "Red"
-//                    colorCode: "red"
-//                }
-
-//                ListElement {
-//                    name: "Blue"
-//                    colorCode: "blue"
-//                }
-
-//                ListElement {
-//                    name: "Green"
-//                    colorCode: "green"
-//                }
-//            }
+            model: eventModel
+            ScrollBar.vertical: ScrollBar {}
         }
+
     }
 
 }

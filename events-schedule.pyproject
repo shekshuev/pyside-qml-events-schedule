@@ -2,8 +2,8 @@
     "files": [
         "main.py",
         "main.qml",
-        "models/event_model.py",
         "models/event_type.py",
+        "models/repository.py",
         "qml/pages/addPage.qml",
         "qml/pages/homePage.qml",
         "qml/pages/listPage.qml"
