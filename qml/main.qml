@@ -8,7 +8,6 @@ Window {
     width: 1000
     height: 580
     visible: true
-    color: "#00000000"
     title: qsTr("Events schedule")
 
     Rectangle {
@@ -90,7 +89,10 @@ Window {
             anchors.bottom: parent.bottom
             clip: true
             anchors.leftMargin: 0
-            initialItem: Qt.resolvedUrl("pages/homePage.qml")
         }
+    }
+
+    onSceneGraphInitialized: {
+        stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
     }
 }

@@ -1,5 +1,6 @@
 from PySide6.QtCore import Qt
 from PySide6.QtSql import QSqlDatabase, QSqlQuery, QSqlQueryModel
+# import time
 
 def init():
     conn = QSqlDatabase.addDatabase("QSQLITE")
@@ -18,14 +19,14 @@ def init():
         """
     )
 
-#    query = QSqlQuery()
-#    query.prepare("insert into events (title, description, begin_date, end_date, event_type) values (?, ?, ?, ?, ?)")
-#    query.addBindValue("title")
-#    query.addBindValue("event description here...")
-#    query.addBindValue(int(time.time()))
-#    query.addBindValue(int(time.time()))
-#    query.addBindValue("CLASS")
-#    query.exec()
+    # query = QSqlQuery()
+    # query.prepare("insert into events (title, description, begin_date, end_date, event_type) values (?, ?, ?, ?, ?)")
+    # query.addBindValue("title")
+    # query.addBindValue("event description here...")
+    # query.addBindValue(int(time.time()))
+    # query.addBindValue(int(time.time()))
+    # query.addBindValue("CLASS")
+    # query.exec()
 
 
 class EventModel(QSqlQueryModel):
