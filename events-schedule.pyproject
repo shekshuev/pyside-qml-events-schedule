@@ -6,6 +6,7 @@
         "models/repository.py",
         "qml/pages/addPage.qml",
         "qml/pages/homePage.qml",
-        "qml/pages/listPage.qml"
+        "qml/pages/listPage.qml",
+        "resource.qrc"
     ]
 }

@@ -1,98 +1,82 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Material 2.15
+import QtQuick.Layouts 1.3
 
-Window {
+ApplicationWindow {
     id: mainWindow
     width: 1000
     height: 580
     visible: true
     title: qsTr("Events schedule")
 
-    Rectangle {
-        id: bg
-        color: Material.background
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.bottom: parent.bottom
 
-        Rectangle {
-            id: leftMenu
-            width: 70
-            color: Material.primary
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.leftMargin: 0
-            anchors.bottomMargin: 0
-            anchors.topMargin: 0
+    header: ToolBar {
+        RowLayout {
+            anchors.fill: parent
+            Label {
+                text: {
+                    switch (swipeView.currentIndex) {
+                    case 0:
+                        return "Home";
+                    case 1:
+                        return "Events list";
+                    default:
+                        return null;
+                    }
+                }
+                elide: Label.ElideRight
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+                Layout.fillWidth: true
+            }
+        }
+    }
 
-            Column {
-                id: column
+
+    SwipeView {
+        id: swipeView
+        anchors.fill: parent
+        currentIndex: tabBar.currentIndex
+        onCurrentIndexChanged: {
+            tabBar.currentIndex = currentIndex
+        }
+
+        Page {
+            Loader {
+                source: Qt.resolvedUrl("pages/homePage.qml")
                 anchors.fill: parent
-                anchors.bottomMargin: 0
-
-                ToolButton {
-                    id: homeButton
-                    width: 70
-                    height: 60
-                    icon.source: "../icons/home.svg"
-                    anchors.left: parent.left
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.leftMargin: 0
-                    onClicked: {
-                        stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
-                    }
-                }
-
-                ToolButton {
-                    id: listButton
-                    height: 60
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.top: homeButton.bottom
-                    anchors.topMargin: 0
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 0
-                    icon.source: "../icons/list.svg"
-                    onClicked: {
-                        stackView.push(Qt.resolvedUrl("pages/listPage.qml"))
-                    }
-                }
-
-                ToolButton {
-                    id: addButton
-                    height: 60
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.top: listButton.bottom
-                    anchors.rightMargin: 0
-                    anchors.leftMargin: 0
-                    anchors.topMargin: 0
-                    icon.source: "../icons/add.svg"
-                    onClicked: {
-                        stackView.push(Qt.resolvedUrl("pages/addPage.qml"))
-                    }
-                }
-
             }
         }
 
-        StackView {
-            id: stackView
-            anchors.left: leftMenu.right
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            clip: true
-            anchors.leftMargin: 0
+        Page {
+            Loader {
+                source: Qt.resolvedUrl("pages/eventsPage.qml")
+                anchors.fill: parent
+            }
+        }
+
+    }
+
+
+
+    footer: TabBar {
+        id: tabBar
+        width: parent.width
+        currentIndex: swipeView.currentIndex
+        onCurrentIndexChanged: {
+            swipeView.currentIndex = currentIndex
+        }
+
+        TabButton {
+            id: homeButton
+            icon.source: "qrc:/icons/home.svg"
+        }
+
+        TabButton {
+            id: listButton
+            icon.source: "qrc:/icons/list.svg"
         }
     }
 
-    onSceneGraphInitialized: {
-        stackView.push(Qt.resolvedUrl("pages/homePage.qml"))
-    }
 }
