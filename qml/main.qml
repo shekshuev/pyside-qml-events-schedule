@@ -10,10 +10,19 @@ ApplicationWindow {
     visible: true
     title: qsTr("Events schedule")
 
+    signal backButtonClick
 
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
+            ToolButton {
+                icon.source: "qrc:/icons/back.svg"
+                onClicked: {
+                    console.log(1)
+                    backButtonClick()
+                    console.log(2)
+                }
+            }
             Label {
                 text: {
                     switch (swipeView.currentIndex) {
@@ -25,10 +34,9 @@ ApplicationWindow {
                         return null;
                     }
                 }
-                elide: Label.ElideRight
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
-                Layout.fillWidth: true
+                anchors.fill: parent
             }
         }
     }

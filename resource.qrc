@@ -4,5 +4,6 @@
         <file>icons/add.svg</file>
         <file>icons/home.svg</file>
         <file>icons/list.svg</file>
+        <file>icons/back.svg</file>
     </qresource>
 </RCC>

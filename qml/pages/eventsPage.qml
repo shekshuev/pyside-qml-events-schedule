@@ -2,6 +2,14 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 Item {
+
+    Connections {
+        target: root
+        function onBackButtonClicked() {
+            console.log(123)
+        }
+    }
+
     StackView {
         id: stackView
         anchors.fill: parent

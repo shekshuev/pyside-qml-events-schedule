@@ -1,7 +1,7 @@
 {
     "files": [
         "main.py",
-        "main.qml",
+        "qml/main.qml",
         "models/event_type.py",
         "models/repository.py",
         "qml/pages/addPage.qml",
