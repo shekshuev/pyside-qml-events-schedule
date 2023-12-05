@@ -3,11 +3,11 @@ import QtQuick.Controls 2.15
 
 Item {
 
-    Connections {
-        target: root
-        function onBackButtonClicked() {
-            console.log(123)
-        }
+    signal addButtonClicked
+
+    function goBack() {
+        roundButton.visible = true
+        stackView.pop()
     }
 
     StackView {
@@ -24,8 +24,12 @@ Item {
             anchors.bottomMargin: 10
             anchors.rightMargin: 10
             icon.source: "qrc:/icons/add.svg"
+            Material.background: Material.accent
+            Material.foreground: Material.toolTextColor
             z: 10
             onClicked: {
+                addButtonClicked()
+                roundButton.visible = false
                 stackView.push(Qt.resolvedUrl("addPage.qml"))
             }
         }

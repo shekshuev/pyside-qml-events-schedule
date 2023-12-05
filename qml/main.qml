@@ -10,17 +10,16 @@ ApplicationWindow {
     visible: true
     title: qsTr("Events schedule")
 
-    signal backButtonClick
-
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
             ToolButton {
+                id: backButton
                 icon.source: "qrc:/icons/back.svg"
+                visible: false
                 onClicked: {
-                    console.log(1)
-                    backButtonClick()
-                    console.log(2)
+                    eventPageLoader.item.goBack()
+                    visible = false
                 }
             }
             Label {
@@ -59,9 +58,19 @@ ApplicationWindow {
 
         Page {
             Loader {
+                id: eventPageLoader
                 source: Qt.resolvedUrl("pages/eventsPage.qml")
                 anchors.fill: parent
+
+                Connections {
+                    target: eventPageLoader.item
+                    onAddButtonClicked: {
+                        backButton.visible = true
+                    }
+                }
             }
+
+
         }
 
     }
