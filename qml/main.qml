@@ -1,10 +1,11 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.3
 
 ApplicationWindow {
-    id: mainWindow
+    id: root
     width: 480
     height: 640
     visible: true
@@ -23,6 +24,16 @@ ApplicationWindow {
         roundButton.visible = true
         stackView.pop()
     }
+
+
+    Connections {
+        target: stackView.currentItem
+        onEventAdded: {
+            eventModel.refresh()
+            goBack()
+        }
+    }
+
 
     header: ToolBar {
         RowLayout {
@@ -72,19 +83,9 @@ ApplicationWindow {
 
                 Page {
                     Loader {
-                        id: eventPageLoader
                         source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
                         anchors.fill: parent
-
-                        Connections {
-                            target: eventPageLoader.item
-                            onAddButtonClicked: {
-                                backButton.visible = true
-                            }
-                        }
                     }
-
-
                 }
 
             }

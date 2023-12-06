@@ -31,6 +31,8 @@ Item {
         anchors.fill: parent
         anchors.margins: 10
         spacing: 10
+        model: eventModel
+        ScrollBar.vertical: ScrollBar {}
 
         delegate: Pane {
             width: listView.width
@@ -86,8 +88,6 @@ Item {
 
 
         }
-        model: eventModel
-        ScrollBar.vertical: ScrollBar {}
     }
 
 }
