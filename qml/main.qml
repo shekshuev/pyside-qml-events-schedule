@@ -10,6 +10,8 @@ ApplicationWindow {
     visible: true
     title: qsTr("Events schedule")
 
+    property var size: eventModel.rowCount()
+
     function openAddPage() {
         backButton.visible = true
         roundButton.visible = false
@@ -71,7 +73,7 @@ ApplicationWindow {
                 Page {
                     Loader {
                         id: eventPageLoader
-                        source: Qt.resolvedUrl("pages/listPage.qml")
+                        source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
                         anchors.fill: parent
 
                         Connections {

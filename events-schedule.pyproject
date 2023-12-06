@@ -7,6 +7,7 @@
         "qml/pages/addPage.qml",
         "qml/pages/homePage.qml",
         "qml/pages/listPage.qml",
+        "qml/pages/emptyListPage.qml",
         "resource.qrc"
     ]
 }
