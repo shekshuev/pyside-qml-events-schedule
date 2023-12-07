@@ -26,6 +26,8 @@ Item {
         }
     }
 
+    signal editButtonClicked
+
     ListView {
         id: listView
         anchors.fill: parent
@@ -38,53 +40,65 @@ Item {
             width: listView.width
             Material.elevation: 3
 
-            ColumnLayout {
-                Label {
-                    Layout.fillWidth: true
-                    renderType: Text.NativeRendering
-                    text: model.title
-                    font.pointSize: 20
-                }
-                Label {
-                    Layout.fillWidth: true
-                    renderType: Text.NativeRendering
-                    text: {
-                        return formatType(model.event_type)
-                    }
-                }
-                Label {
-                    Layout.fillWidth: true
-                    renderType: Text.NativeRendering
-                    text: model.description
-                }
-                RowLayout {
-                    Layout.fillWidth: true
+            RowLayout {
+                ColumnLayout {
+                    Layout.alignment: Qt.AlignLeft
                     Label {
                         Layout.fillWidth: true
                         renderType: Text.NativeRendering
-                        text: {
-                            const date = new Date(model.begin_date * 1000);
-                            if (isValidDate(date)) {
-                                return `Begin at ${minTwoDigits(date.getDate())}.${date.getMonth()}.${date.getFullYear()} ${date.toTimeString()}.`;
-                            } else {
-                                return 'Begin date is not set.'
-                            }
-                        }
+                        text: model.title
+                        font.pointSize: 20
                     }
                     Label {
                         Layout.fillWidth: true
                         renderType: Text.NativeRendering
                         text: {
-                            const date = new Date(model.end_date * 1000);
-                            if (isValidDate(date)) {
-                                return `End at ${minTwoDigits(date.getDate())}.${date.getMonth()}.${date.getFullYear()} ${date.toTimeString()}.`;
-                            } else {
-                                return 'End date is not set.'
+                            return formatType(model.event_type)
+                        }
+                    }
+                    Label {
+                        Layout.fillWidth: true
+                        renderType: Text.NativeRendering
+                        text: model.description
+                    }
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Label {
+                            Layout.fillWidth: true
+                            renderType: Text.NativeRendering
+                            text: {
+                                const date = new Date(model.begin_date * 1000);
+                                if (isValidDate(date)) {
+                                    return `Begin at ${minTwoDigits(date.getDate())}.${date.getMonth()}.${date.getFullYear()} ${date.toTimeString()}.`;
+                                } else {
+                                    return 'Begin date is not set.'
+                                }
                             }
                         }
+                        Label {
+                            Layout.fillWidth: true
+                            renderType: Text.NativeRendering
+                            text: {
+                                const date = new Date(model.end_date * 1000);
+                                if (isValidDate(date)) {
+                                    return `End at ${minTwoDigits(date.getDate())}.${date.getMonth()}.${date.getFullYear()} ${date.toTimeString()}.`;
+                                } else {
+                                    return 'End date is not set.'
+                                }
+                            }
+                        }
+                    }
+                }
+                ToolButton {
+                    icon.source: "qrc:/icons/edit.svg"
+                    Layout.alignment: Qt.AlignRight
+                    onClicked: {
+                        editButtonClicked()
                     }
                 }
             }
+
+
 
 
         }

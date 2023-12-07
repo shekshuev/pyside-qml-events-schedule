@@ -28,9 +28,16 @@ ApplicationWindow {
 
     Connections {
         target: stackView.currentItem
-        onEventAdded: {
+        function onEventAdded() {
             eventModel.refresh()
             goBack()
+        }
+    }
+
+    Connections {
+        target: listPage
+        function onEditButtonClicked() {
+            console.log("edit")
         }
     }
 
@@ -83,6 +90,7 @@ ApplicationWindow {
 
                 Page {
                     Loader {
+                        id: listPage
                         source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
                         anchors.fill: parent
                     }
