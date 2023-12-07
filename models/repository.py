@@ -39,6 +39,7 @@ class EventModel(QSqlQueryModel):
 
     @Slot()
     def refresh(self):
+        self.setQuery("SELECT * FROM events")
         self.query().exec()
 
     def roleNames(self):
