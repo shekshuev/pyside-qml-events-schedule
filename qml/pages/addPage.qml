@@ -4,7 +4,6 @@ import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.3
 
 Item {
-    id: addPage
 
     function eventTypeToString(t) {
         switch (t) {

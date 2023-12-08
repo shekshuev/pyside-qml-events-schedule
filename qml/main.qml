@@ -34,14 +34,6 @@ ApplicationWindow {
         }
     }
 
-    Connections {
-        target: listPage
-        function onEditButtonClicked() {
-            console.log("edit")
-        }
-    }
-
-
     header: ToolBar {
         RowLayout {
             anchors.fill: parent
@@ -62,9 +54,7 @@ ApplicationWindow {
                         return null;
                     }
                 }
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                anchors.fill: parent
+                Layout.alignment: Qt.AlignCenter
             }
         }
     }
@@ -72,6 +62,7 @@ ApplicationWindow {
     StackView {
         id: stackView
         anchors.fill: parent
+
         initialItem: Page {
             SwipeView {
                 id: swipeView
@@ -90,7 +81,13 @@ ApplicationWindow {
 
                 Page {
                     Loader {
-                        id: listPage
+                        id: pageLoader
+                        Connections {
+                            target: pageLoader.item
+                            function onEditButtonClicked(id: int) {
+                                console.log(id)
+                            }
+                        }
                         source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
                         anchors.fill: parent
                     }

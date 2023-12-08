@@ -26,7 +26,7 @@ Item {
         }
     }
 
-    signal editButtonClicked
+    signal editButtonClicked(id: int);
 
     ListView {
         id: listView
@@ -41,6 +41,7 @@ Item {
             Material.elevation: 3
 
             RowLayout {
+                anchors.fill: parent
                 ColumnLayout {
                     Layout.alignment: Qt.AlignLeft
                     Label {
@@ -93,13 +94,10 @@ Item {
                     icon.source: "qrc:/icons/edit.svg"
                     Layout.alignment: Qt.AlignRight
                     onClicked: {
-                        editButtonClicked()
+                        editButtonClicked(model.id)
                     }
                 }
             }
-
-
-
 
         }
     }
