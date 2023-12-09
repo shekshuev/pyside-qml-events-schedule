@@ -5,6 +5,10 @@ import QtQuick.Layouts 1.3
 
 Item {
 
+    signal eventAdded
+
+    property int eventId
+
     function eventTypeToString(t) {
         switch (t) {
             case 'CLASS':
@@ -27,7 +31,11 @@ Item {
         }
     }
 
-    signal eventAdded
+    Component.onCompleted: {
+        if (eventId > 0) {
+            singleEventModel.load_event(eventId)
+        }
+    }
 
     ColumnLayout {
         spacing: 10
@@ -43,9 +51,9 @@ Item {
                 id: titleTextField
                 placeholderText: "Title"
                 Layout.fillWidth: true
-                text: addEventModel.title
+                text: singleEventModel.title
                 onTextChanged: {
-                    addEventModel.title = text
+                    singleEventModel.title = text
                 }
             }
 
@@ -53,9 +61,9 @@ Item {
                 id: descriptionTextArea
                 placeholderText: "Description"
                 Layout.fillWidth: true
-                text: addEventModel.description
+                text: singleEventModel.description
                 onTextChanged: {
-                    addEventModel.description = text
+                    singleEventModel.description = text
                 }
             }
 
@@ -63,11 +71,11 @@ Item {
                 id: eventTypeComboBox
                 Layout.fillWidth: true
                 Component.onCompleted: {
-                    currentIndex = find(eventTypeToString(addEventModel.event_type))
+                    currentIndex = find(eventTypeToString(singleEventModel.event_type))
                 }
                 model: ["Class", "Sports", "Other"]
                 onCurrentIndexChanged: {
-                    addEventModel.event_type = stringToEventType(model[currentIndex])
+                    singleEventModel.event_type = stringToEventType(model[currentIndex])
                 }
             }
 
@@ -79,7 +87,7 @@ Item {
             text: "Add"
             Material.roundedScale: Material.FullScale
             onClicked: {
-                addEventModel.save()
+                singleEventModel.save()
                 eventAdded()
             }
         }

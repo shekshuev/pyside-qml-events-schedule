@@ -3,11 +3,12 @@
         "main.py",
         "qml/main.qml",
         "models/event_type.py",
-        "models/repository.py",
-        "qml/pages/addPage.qml",
+        "qml/pages/singlePage.qml",
         "qml/pages/homePage.qml",
         "qml/pages/listPage.qml",
         "qml/pages/emptyListPage.qml",
-        "resource.qrc"
+        "resource.qrc",
+        "models/list_event_model.py",
+        "models/single_event_model.py"
     ]
 }

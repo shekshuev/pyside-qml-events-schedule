@@ -33,7 +33,7 @@ Item {
         anchors.fill: parent
         anchors.margins: 10
         spacing: 10
-        model: eventModel
+        model: listEventModel
         ScrollBar.vertical: ScrollBar {}
 
         delegate: Pane {

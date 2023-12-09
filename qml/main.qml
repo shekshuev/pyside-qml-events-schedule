@@ -11,12 +11,12 @@ ApplicationWindow {
     visible: true
     title: qsTr("Events schedule")
 
-    property var size: eventModel.rowCount()
+    property var size: listEventModel.rowCount()
 
     function openAddPage() {
         backButton.visible = true
         roundButton.visible = false
-        stackView.push(Qt.resolvedUrl("pages/addPage.qml"))
+        stackView.push(Qt.resolvedUrl("pages/singlePage.qml"))
     }
 
     function goBack() {
@@ -29,33 +29,31 @@ ApplicationWindow {
     Connections {
         target: stackView.currentItem
         function onEventAdded() {
-            eventModel.refresh()
+            listEventModel.refresh()
             goBack()
         }
     }
 
     header: ToolBar {
-        RowLayout {
-            anchors.fill: parent
-            ToolButton {
-                id: backButton
-                icon.source: "qrc:/icons/back.svg"
-                visible: false
-                onClicked: goBack()
-            }
-            Label {
-                text: {
-                    switch (swipeView.currentIndex) {
-                    case 0:
-                        return "Home";
-                    case 1:
-                        return "Events list";
-                    default:
-                        return null;
-                    }
+        ToolButton {
+            id: backButton
+            icon.source: "qrc:/icons/back.svg"
+            visible: false
+            onClicked: goBack()
+            anchors.left: parent.left
+        }
+        Label {
+            text: {
+                switch (swipeView.currentIndex) {
+                case 0:
+                    return "Home";
+                case 1:
+                    return "Events list";
+                default:
+                    return null;
                 }
-                Layout.alignment: Qt.AlignCenter
             }
+            anchors.centerIn: parent
         }
     }
 
