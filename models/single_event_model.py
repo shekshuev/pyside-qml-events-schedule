@@ -1,19 +1,28 @@
-from PySide6.QtCore import QObject, Property, Slot
+from PySide6.QtCore import QObject, Property, Slot, Signal
 from PySide6.QtSql import QSqlQuery
 import time
 
 class SingleEventModel(QObject):
 
-    def __init_data(self):
+    def __init__(self, parent=None):
+        super(SingleEventModel, self).__init__(parent)
+        self.__clear()
+
+    def __clear(self):
+        self.__id = 0
         self.__title = ""
         self.__description = ""
         self.__event_type = "CLASS"
         self.__begin_date = int(time.time())
         self.__end_date = int(time.time())
 
-    def __init__(self, parent=None):
-        super(SingleEventModel, self).__init__(parent)
-        self.__init_data()
+    @Signal
+    def title_changed(self):
+        pass
+
+    @Signal
+    def description_changed(self):
+        pass
 
     @Slot()
     def save(self):
@@ -25,9 +34,25 @@ class SingleEventModel(QObject):
         query.addBindValue(self.__end_date)
         query.addBindValue(self.__event_type)
         query.exec()
-        self.__init_data()
+        self.__clear()
 
-    @Property(str)
+    @Slot(int)
+    def load(self, event_id):
+        query = QSqlQuery()
+        query.prepare("select * from events where id = ?")
+        query.addBindValue(event_id)
+        if query.exec() and query.next():
+            record = query.record()
+            self.__title = event_id
+            self.__title = record.field(record.indexOf("title")).value()
+            self.__description = record.field(record.indexOf("description")).value()
+            self.__event_type = record.field(record.indexOf("event_type")).value()
+            self.__begin_date = record.field(record.indexOf("begin_date")).value()
+            self.__end_date = record.field(record.indexOf("end_date")).value()
+            self.title_changed.emit()
+            self.description_changed.emit()
+
+    @Property(str, notify=title_changed)
     def title(self):
         return self.__title
 
@@ -35,7 +60,7 @@ class SingleEventModel(QObject):
     def title(self, val):
         self.__title = val
 
-    @Property(str)
+    @Property(str, notify=description_changed)
     def description(self):
         return self.__description
 

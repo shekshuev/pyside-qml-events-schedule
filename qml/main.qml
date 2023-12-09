@@ -13,10 +13,10 @@ ApplicationWindow {
 
     property var size: listEventModel.rowCount()
 
-    function openAddPage() {
+    function openSinglePage(id: int) {
         backButton.visible = true
         roundButton.visible = false
-        stackView.push(Qt.resolvedUrl("pages/singlePage.qml"))
+        stackView.push(Qt.resolvedUrl("pages/singlePage.qml"), { eventId: id || 0 })
     }
 
     function goBack() {
@@ -83,7 +83,7 @@ ApplicationWindow {
                         Connections {
                             target: pageLoader.item
                             function onEditButtonClicked(id: int) {
-                                console.log(id)
+                                openSinglePage(id)
                             }
                         }
                         source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
@@ -124,7 +124,7 @@ ApplicationWindow {
             Material.background: Material.accent
             Material.foreground: Material.toolTextColor
             z: 10
-            onClicked: openAddPage()
+            onClicked: openSinglePage()
         }
     }
 

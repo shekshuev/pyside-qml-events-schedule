@@ -33,7 +33,7 @@ Item {
 
     Component.onCompleted: {
         if (eventId > 0) {
-            singleEventModel.load_event(eventId)
+            singleEventModel.load(eventId)
         }
     }
 
@@ -51,9 +51,10 @@ Item {
                 id: titleTextField
                 placeholderText: "Title"
                 Layout.fillWidth: true
-                text: singleEventModel.title
-                onTextChanged: {
-                    singleEventModel.title = text
+                Binding {
+                    target: singleEventModel
+                    property: "title"
+                    value: titleTextField.text
                 }
             }
 
@@ -61,9 +62,10 @@ Item {
                 id: descriptionTextArea
                 placeholderText: "Description"
                 Layout.fillWidth: true
-                text: singleEventModel.description
-                onTextChanged: {
-                    singleEventModel.description = text
+                Binding {
+                    target: singleEventModel
+                    property: "description"
+                    value: descriptionTextArea.text
                 }
             }
 
@@ -84,7 +86,14 @@ Item {
         Button {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
-            text: "Add"
+            text: {
+                if (eventId > 0) {
+                    return "Save changes"
+                } else {
+                    return "Add new event"
+                }
+            }
+
             Material.roundedScale: Material.FullScale
             onClicked: {
                 singleEventModel.save()
