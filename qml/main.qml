@@ -12,17 +12,20 @@ ApplicationWindow {
     title: qsTr("Events schedule")
 
     property var size: listEventModel.rowCount()
+    property string currentStackViewPage: "default"
 
     function openSinglePage(id: int) {
         backButton.visible = true
         roundButton.visible = false
         stackView.push(Qt.resolvedUrl("pages/singlePage.qml"), { eventId: id || 0 })
+        currentStackViewPage = id > 0 ? "editPage" : "addPage"
     }
 
     function goBack() {
         backButton.visible = false
         roundButton.visible = true
         stackView.pop()
+        currentStackViewPage = "default"
     }
 
 
@@ -30,6 +33,7 @@ ApplicationWindow {
         target: singleEventModel
         function onEdited() {
             listEventModel.refresh()
+            size = listEventModel.rowCount()
             goBack()
         }
     }
@@ -44,13 +48,19 @@ ApplicationWindow {
         }
         Label {
             text: {
-                switch (swipeView.currentIndex) {
-                case 0:
-                    return "Home";
-                case 1:
-                    return "Events list";
-                default:
-                    return null;
+                if (currentStackViewPage === "addPage") {
+                    return "Add new event"
+                } else if (currentStackViewPage === "editPage") {
+                    return "Edit event"
+                } else {
+                    switch (swipeView.currentIndex) {
+                        case 0:
+                            return "Home";
+                        case 1:
+                            return "Events list";
+                        default:
+                            return null;
+                    }
                 }
             }
             anchors.centerIn: parent

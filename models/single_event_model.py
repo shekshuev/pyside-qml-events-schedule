@@ -52,6 +52,19 @@ class SingleEventModel(QObject):
         else:
             print(query.lastError().databaseText())
 
+
+    @Slot()
+    def delete(self):
+        if self.__id:
+            query = QSqlQuery()
+            query.prepare("delete from events where id = ?")
+            query.addBindValue(self.__id)
+            if query.exec():
+                self.edited.emit()
+                self.__clear()
+            else:
+                print(query.lastError().databaseText())
+
     @Slot(int)
     def load(self, event_id):
         query = QSqlQuery()

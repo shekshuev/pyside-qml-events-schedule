@@ -93,21 +93,39 @@ Item {
 
         }
 
-        Button {
+        ColumnLayout {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignBottom
-            text: {
-                if (eventId > 0) {
-                    return "Save changes"
-                } else {
-                    return "Add new event"
+            Button {
+                Layout.fillWidth: true
+                text: {
+                    if (eventId > 0) {
+                        return "Save changes"
+                    } else {
+                        return "Add new event"
+                    }
+                }
+                Material.background: Material.accent
+                Material.foreground: Material.toolTextColor
+                Material.roundedScale: Material.FullScale
+                onClicked: {
+                    singleEventModel.save()
                 }
             }
 
-            Material.roundedScale: Material.FullScale
-            onClicked: {
-                singleEventModel.save()
+            Button {
+                visible: eventId > 0
+                Layout.fillWidth: true
+                text: "Delete event"
+                Material.background: Material.Red
+                Material.foreground: Material.toolTextColor
+                Material.roundedScale: Material.FullScale
+                onClicked: {
+                    singleEventModel.delete()
+                }
             }
         }
+
+
     }
 }
