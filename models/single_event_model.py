@@ -17,15 +17,15 @@ class SingleEventModel(QObject):
         self.__end_date = int(time.time())
 
     @Signal
-    def title_changed(self):
+    def titleChanged(self):
         pass
 
     @Signal
-    def description_changed(self):
+    def descriptionChanged(self):
         pass
 
     @Signal
-    def event_type_changed(self):
+    def eventTypeChanged(self):
         pass
 
     @Signal
@@ -65,11 +65,11 @@ class SingleEventModel(QObject):
             self.__event_type = record.field(record.indexOf("event_type")).value()
             self.__begin_date = record.field(record.indexOf("begin_date")).value()
             self.__end_date = record.field(record.indexOf("end_date")).value()
-            self.title_changed.emit()
-            self.description_changed.emit()
-            self.event_type_changed.emit()
+            self.titleChanged.emit()
+            self.descriptionChanged.emit()
+            self.eventTypeChanged.emit()
 
-    @Property(str, notify=title_changed)
+    @Property(str, notify=titleChanged)
     def title(self):
         return self.__title
 
@@ -77,7 +77,7 @@ class SingleEventModel(QObject):
     def title(self, val):
         self.__title = val
 
-    @Property(str, notify=description_changed)
+    @Property(str, notify=descriptionChanged)
     def description(self):
         return self.__description
 
@@ -85,27 +85,27 @@ class SingleEventModel(QObject):
     def description(self, val):
         self.__description = val
 
-    @Property(str, notify=event_type_changed)
-    def event_type(self):
+    @Property(str, notify=eventTypeChanged)
+    def eventType(self):
         return self.__event_type
 
-    @event_type.setter
-    def event_type(self, val):
+    @eventType.setter
+    def eventType(self, val):
         self.__event_type = val
 
     @Property(str)
-    def begin_date(self):
+    def beginDate(self):
         return self.__begin_date
 
-    @begin_date.setter
-    def begin_date(self, val):
+    @beginDate.setter
+    def beginDate(self, val):
         self.__begin_date = val
 
     @Property(str)
-    def end_date(self):
+    def endDate(self):
         return self.__end_date
 
-    @end_date.setter
-    def end_date(self, val):
+    @endDate.setter
+    def endDate(self, val):
         self.__end_date = val
 

@@ -38,7 +38,7 @@ Item {
            descriptionTextArea.text = singleEventModel.description
         }
         function onEventTypeChanged() {
-            eventTypeComboBox.currentIndex = find(eventTypeToString(singleEventModel.event_type))
+            eventTypeComboBox.currentIndex = eventTypeComboBox.find(eventTypeToString(singleEventModel.eventType))
         }
     }
 
@@ -85,7 +85,7 @@ Item {
                 Layout.fillWidth: true
                 Binding {
                     target: singleEventModel
-                    property: "event_type"
+                    property: "eventType"
                     value: stringToEventType(eventTypeComboBox.model[eventTypeComboBox.currentIndex])
                 }
                 model: ["Class", "Sports", "Other"]

@@ -11,7 +11,7 @@ ApplicationWindow {
     visible: true
     title: qsTr("Events schedule")
 
-    // property var size: listEventModel.rowCount()
+    property var size: listEventModel.rowCount()
 
     function openSinglePage(id: int) {
         backButton.visible = true
@@ -86,8 +86,7 @@ ApplicationWindow {
                                 openSinglePage(id)
                             }
                         }
-                        // source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
-                        source: Qt.resolvedUrl("pages/listPage.qml")
+                        source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
                         anchors.fill: parent
                     }
                 }
