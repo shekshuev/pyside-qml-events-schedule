@@ -11,7 +11,7 @@ ApplicationWindow {
     visible: true
     title: qsTr("Events schedule")
 
-    property var size: listEventModel.rowCount()
+    // property var size: listEventModel.rowCount()
 
     function openSinglePage(id: int) {
         backButton.visible = true
@@ -27,8 +27,8 @@ ApplicationWindow {
 
 
     Connections {
-        target: stackView.currentItem
-        function onEventAdded() {
+        target: singleEventModel
+        function onEdited() {
             listEventModel.refresh()
             goBack()
         }
@@ -86,7 +86,8 @@ ApplicationWindow {
                                 openSinglePage(id)
                             }
                         }
-                        source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
+                        // source: size > 0 ? Qt.resolvedUrl("pages/listPage.qml") : Qt.resolvedUrl("pages/emptyListPage.qml")
+                        source: Qt.resolvedUrl("pages/listPage.qml")
                         anchors.fill: parent
                     }
                 }

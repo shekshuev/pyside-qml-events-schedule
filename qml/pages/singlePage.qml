@@ -5,8 +5,6 @@ import QtQuick.Layouts 1.3
 
 Item {
 
-    signal eventAdded
-
     property int eventId
 
     function eventTypeToString(t) {
@@ -28,6 +26,19 @@ Item {
                 return 'SPORTS';
             default:
                 return 'OTHER'
+        }
+    }
+
+    Connections {
+        target: singleEventModel
+        function onTitleChanged() {
+           titleTextField.text = singleEventModel.title
+        }
+        function onDescriptionChanged() {
+           descriptionTextArea.text = singleEventModel.description
+        }
+        function onEventTypeChanged() {
+            eventTypeComboBox.currentIndex = find(eventTypeToString(singleEventModel.event_type))
         }
     }
 
@@ -72,13 +83,12 @@ Item {
             ComboBox {
                 id: eventTypeComboBox
                 Layout.fillWidth: true
-                Component.onCompleted: {
-                    currentIndex = find(eventTypeToString(singleEventModel.event_type))
+                Binding {
+                    target: singleEventModel
+                    property: "event_type"
+                    value: stringToEventType(eventTypeComboBox.model[eventTypeComboBox.currentIndex])
                 }
                 model: ["Class", "Sports", "Other"]
-                onCurrentIndexChanged: {
-                    singleEventModel.event_type = stringToEventType(model[currentIndex])
-                }
             }
 
         }
@@ -97,7 +107,6 @@ Item {
             Material.roundedScale: Material.FullScale
             onClicked: {
                 singleEventModel.save()
-                eventAdded()
             }
         }
     }

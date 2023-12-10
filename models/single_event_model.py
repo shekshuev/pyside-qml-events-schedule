@@ -24,17 +24,33 @@ class SingleEventModel(QObject):
     def description_changed(self):
         pass
 
+    @Signal
+    def event_type_changed(self):
+        pass
+
+    @Signal
+    def edited(self):
+        pass
+
     @Slot()
     def save(self):
         query = QSqlQuery()
-        query.prepare("insert into events (title, description, begin_date, end_date, event_type) values (?, ?, ?, ?, ?)")
+        if self.__id > 0:
+            query.prepare("update events set title = ?, description = ?, begin_date = ?, end_date = ?, event_type = ? where id = ?")
+        else:
+            query.prepare("insert into events (title, description, begin_date, end_date, event_type) values (?, ?, ?, ?, ?)")
         query.addBindValue(self.__title)
         query.addBindValue(self.__description)
         query.addBindValue(self.__begin_date)
         query.addBindValue(self.__end_date)
         query.addBindValue(self.__event_type)
-        query.exec()
-        self.__clear()
+        if self.__id > 0:
+            query.addBindValue(self.__id)
+        if query.exec():
+            self.edited.emit()
+            self.__clear()
+        else:
+            print(query.lastError().databaseText())
 
     @Slot(int)
     def load(self, event_id):
@@ -43,7 +59,7 @@ class SingleEventModel(QObject):
         query.addBindValue(event_id)
         if query.exec() and query.next():
             record = query.record()
-            self.__title = event_id
+            self.__id = event_id
             self.__title = record.field(record.indexOf("title")).value()
             self.__description = record.field(record.indexOf("description")).value()
             self.__event_type = record.field(record.indexOf("event_type")).value()
@@ -51,6 +67,7 @@ class SingleEventModel(QObject):
             self.__end_date = record.field(record.indexOf("end_date")).value()
             self.title_changed.emit()
             self.description_changed.emit()
+            self.event_type_changed.emit()
 
     @Property(str, notify=title_changed)
     def title(self):
@@ -68,7 +85,7 @@ class SingleEventModel(QObject):
     def description(self, val):
         self.__description = val
 
-    @Property(str)
+    @Property(str, notify=event_type_changed)
     def event_type(self):
         return self.__event_type
 
